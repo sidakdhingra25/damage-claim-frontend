@@ -90,7 +90,11 @@ export default function DamageClaimVerifier() {
       formData.append('user_claim', details || 'No details provided');
       formData.append('claim_object', claimObject);
 
-      const response = await fetch('http://127.0.0.1:8000/verify-claim', {
+      const API_URL = process.env.NODE_ENV === 'development' 
+        ? 'http://127.0.0.1:8000/verify-claim' 
+        : 'https://damage-claim-verification-system.onrender.com/verify-claim';
+
+      const response = await fetch(API_URL, {
         method: 'POST',
         body: formData,
       });
