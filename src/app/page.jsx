@@ -20,7 +20,7 @@ export default function Home() {
           </div>
         </div>
 
-        <a href="#" className="text-[13px] font-medium text-neutral-400 hover:text-white transition-colors">
+        <a href="https://www.sidak.work/" className="text-[13px] font-medium text-neutral-400 hover:text-white transition-colors">
           To my portfolio
         </a>
       </motion.nav>
