@@ -1,0 +1,5 @@
+{
+  "title": "ClaimAI",
+  "description": "An AI-powered damage claim agent that instantly analyzes photos to verify property or vehicle damage claims, extracting visual facts and cross-referencing them against a strict rules engine to prevent fraud and hallucinated payouts.",
+  "deployed_url": "https://damage-claim-frontend.vercel.app/"
+}
