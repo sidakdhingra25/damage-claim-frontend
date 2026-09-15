@@ -45,7 +45,7 @@ export default function DamageClaimVerifier() {
   useEffect(() => {
     const API_URL = process.env.NODE_ENV === 'development' 
       ? 'http://127.0.0.1:8000/ping' 
-      : `${process.env.BACKEND_URL}/ping`;
+      : `${process.env.NEXT_PUBLIC_BACKEND_URL}/ping`;
     fetch(API_URL).catch(() => {}); // silently fail if server is unreachable
   }, []);
 
@@ -107,7 +107,7 @@ export default function DamageClaimVerifier() {
 
       const API_URL = process.env.NODE_ENV === 'development' 
         ? 'http://127.0.0.1:8000/verify-claim' 
-        : `${process.env.BACKEND_URL}/verify-claim`;
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/verify-claim`;
 
       const response = await fetch(API_URL, {
         method: 'POST',
