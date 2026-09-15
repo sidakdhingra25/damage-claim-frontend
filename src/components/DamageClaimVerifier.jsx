@@ -29,6 +29,7 @@ export default function DamageClaimVerifier() {
   const [isDragging, setIsDragging] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isEvidenceDropdownOpen, setIsEvidenceDropdownOpen] = useState(false);
+  const [isWakingUp, setIsWakingUp] = useState(false);
   const fileInputRef = useRef(null);
   const resultRef = useRef(null);
 
@@ -39,6 +40,14 @@ export default function DamageClaimVerifier() {
       }, 150); // slight delay to allow the layout to expand
     }
   }, [status]);
+
+  // Ghost ping to wake up Render free tier on component mount
+  useEffect(() => {
+    const API_URL = process.env.NODE_ENV === 'development' 
+      ? 'http://127.0.0.1:8000/ping' 
+      : `${process.env.NEXT_PUBLIC_BACKEND_URL}/ping`;
+    fetch(API_URL).catch(() => {}); // silently fail if server is unreachable
+  }, []);
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -83,6 +92,12 @@ export default function DamageClaimVerifier() {
     if (!file) return;
     setStatus('processing');
     setResultData(null);
+    setIsWakingUp(false);
+    
+    // Timer to update UI if server takes too long to wake up
+    const wakeUpTimer = setTimeout(() => {
+      setIsWakingUp(true);
+    }, 8000);
     
     try {
       const formData = new FormData();
@@ -92,7 +107,7 @@ export default function DamageClaimVerifier() {
 
       const API_URL = process.env.NODE_ENV === 'development' 
         ? 'http://127.0.0.1:8000/verify-claim' 
-        : 'https://damage-claim-verification-system.onrender.com/verify-claim';
+        : `${process.env.NEXT_PUBLIC_BACKEND_URL}/verify-claim`;
 
       const response = await fetch(API_URL, {
         method: 'POST',
@@ -131,6 +146,8 @@ export default function DamageClaimVerifier() {
     } catch (error) {
       console.error("Verification failed:", error);
       setStatus('error');
+    } finally {
+      clearTimeout(wakeUpTimer);
     }
   };
 
@@ -299,9 +316,16 @@ export default function DamageClaimVerifier() {
           )}
 
           {status === 'processing' && (
-            <div className="flex-1 flex flex-col items-center justify-center gap-3 text-[#888] min-h-[300px]">
+            <div className="flex-1 flex flex-col items-center justify-center gap-3 text-[#888] min-h-[300px] px-4 text-center">
               <Loader2 className="w-5 h-5 animate-spin text-[#666]" />
-              <span className="text-[13px] font-medium tracking-wide">Analyzing image…</span>
+              <span className="text-[13px] font-medium tracking-wide">
+                {isWakingUp ? 'Waking up the AI server...' : 'Analyzing image…'}
+              </span>
+              {isWakingUp && (
+                <span className="text-[12px] text-[#666] mt-1 max-w-[240px]">
+                  Since this uses a free-tier backend, this first request may take ~40 seconds. Hang tight!
+                </span>
+              )}
             </div>
           )}
 
