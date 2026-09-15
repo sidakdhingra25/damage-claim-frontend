@@ -15,6 +15,18 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "ClaimAI",
   description: "AI-Powered Damage Claim Agent",
+  openGraph: {
+    title: "ClaimAI",
+    description: "AI-Powered Damage Claim Agent",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "ClaimAI Open Graph Image",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({ children }) {
