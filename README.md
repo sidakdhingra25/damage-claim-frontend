@@ -6,6 +6,14 @@ ClaimAI is an intelligent, AI-powered agent designed to instantly analyze and ve
 
 ---
 
+
+
+
+https://github.com/user-attachments/assets/6c89a02c-cda1-497c-97b2-e6a00039100c
+
+
+
+
 ## 🌟 Key Features
 
 - **Instant Visual Extraction:** Users upload evidence photos (e.g., dented cars, cracked laptops), and the Gemini Vision model instantly identifies the damage type, severity, and impacted parts.
