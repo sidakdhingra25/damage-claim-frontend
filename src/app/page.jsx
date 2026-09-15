@@ -1,9 +1,11 @@
 "use client";
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import DamageClaimVerifier from '@/components/DamageClaimVerifier';
-import { ArrowRight, ChevronDown, Code } from 'lucide-react';
+import { ArrowRight, ChevronDown, Code, Play, X } from 'lucide-react';
 
 export default function Home() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   return (
     <div className="min-h-screen bg-[#161616] text-neutral-200 font-sans relative overflow-x-hidden flex flex-col items-center">
 
@@ -48,22 +50,31 @@ export default function Home() {
             from your photos — instantly, accurately, and securely.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-2 w-full max-w-[420px] sm:max-w-none px-4 sm:px-0 mx-auto">
+            <div className="flex flex-row items-center justify-center gap-3 sm:gap-4 w-full sm:w-auto">
+              <button 
+                onClick={() => document.getElementById('agent-container')?.scrollIntoView({ behavior: 'smooth' })}
+                className="group flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-3.5 sm:py-4 px-3 sm:px-10 bg-white text-black font-semibold text-[12.5px] sm:text-[15px] rounded-full hover:bg-[#f5f5f5] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:shadow-[0_0_60px_rgba(255,255,255,0.25)] ring-1 ring-white/20 whitespace-nowrap"
+              >
+                Take me to the agent
+              </button>
+              <a 
+                href="https://github.com/sidakdhingra25/damage-claim-frontend" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="group flex-1 sm:flex-none flex items-center justify-center gap-1.5 sm:gap-2 py-3.5 sm:py-4 px-4 sm:px-8 bg-white/5 text-white font-semibold text-[12.5px] sm:text-[15px] rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/10 whitespace-nowrap"
+              >
+                <Code className="w-4 h-4 sm:w-5 sm:h-5 opacity-90" />
+                Code
+              </a>
+            </div>
             <button 
-              onClick={() => document.getElementById('agent-container')?.scrollIntoView({ behavior: 'smooth' })}
-              className="group flex items-center justify-center gap-2 px-10 py-4 bg-white text-black font-semibold text-[15px] rounded-full hover:bg-[#f5f5f5] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:shadow-[0_0_60px_rgba(255,255,255,0.25)] ring-1 ring-white/20"
+              onClick={() => setIsVideoOpen(true)}
+              className="group w-[calc(50%-6px)] sm:w-auto flex items-center justify-center gap-1.5 sm:gap-2 py-3.5 sm:py-4 px-4 sm:px-8 bg-white/5 text-white font-semibold text-[12.5px] sm:text-[15px] rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/10 whitespace-nowrap"
             >
-              Try the AI Agent
+              <Play className="w-4 h-4 sm:w-5 sm:h-5 opacity-90" fill="currentColor" />
+              Watch Video
             </button>
-            <a 
-              href="https://github.com/sidakdhingra25/damage-claim-frontend" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="group flex items-center justify-center gap-2 px-8 py-4 bg-white/5 backdrop-blur-sm text-white font-semibold text-[15px] rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/10"
-            >
-              <Code className="w-5 h-5 opacity-90" />
-              View Code
-            </a>
           </div>
 
           <div className="mt-8 text-[12.5px] text-[#555]">
@@ -121,6 +132,57 @@ export default function Home() {
         </div>
 
       </main>
+
+      {/* --- VIDEO DRAWER MODAL --- */}
+      <AnimatePresence>
+        {isVideoOpen && (
+          <div className="fixed inset-0 z-[100] flex justify-center">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsVideoOpen(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-md cursor-pointer"
+            />
+
+            {/* Drawer Content */}
+            <motion.div
+              initial={{ y: "100%" }}
+              animate={{ y: 0 }}
+              exit={{ y: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 250 }}
+              className="absolute bottom-0 w-full max-w-4xl bg-[#111] border-t border-l border-r border-white/10 rounded-t-[32px] overflow-hidden shadow-[0_-20px_60px_-15px_rgba(0,0,0,0.5)] flex flex-col"
+            >
+              {/* Drawer Handle (visual only) */}
+              <div className="w-full flex justify-center pt-4 pb-2 bg-[#161616]">
+                <div className="w-12 h-1.5 bg-white/20 rounded-full" />
+              </div>
+
+              {/* Header */}
+              <div className="flex items-center justify-between px-6 pb-4 pt-1 border-b border-white/10 bg-[#161616]">
+                <h3 className="text-white font-medium text-[17px]">ClaimAI Walkthrough</h3>
+                <button
+                  onClick={() => setIsVideoOpen(false)}
+                  className="p-2 -mr-2 text-neutral-400 hover:text-white hover:bg-white/10 rounded-full transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Video Player */}
+              <div className="w-full bg-black relative flex-1 pb-10 sm:pb-0">
+                <video 
+                  src="/damage-claim-sytem-agaent.mp4" 
+                  controls
+                  autoPlay
+                  className="w-full h-auto max-h-[75vh] object-contain"
+                />
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
