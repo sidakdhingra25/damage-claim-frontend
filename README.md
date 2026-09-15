@@ -2,6 +2,9 @@
 
 **Backend Repository:** [Damage-Claim-Verification-System](https://github.com/sidakdhingra25/Damage-Claim-Verification-System)
 
+> [!NOTE]
+> **Live Demo Cold Starts:** The backend API is deployed on Render's free tier, which spins down after 15 minutes of inactivity. If you are testing the live app and the first claim verification takes 40–50 seconds, this is just the server waking up! Subsequent requests will process instantly.
+
 ClaimAI is an intelligent, AI-powered agent designed to instantly analyze and verify property and vehicle damage claims. By combining a powerful Vision LLM with a strict, deterministic rules engine, ClaimAI automates the bottleneck of manual photo reviews without letting AI hallucinations dictate business payouts.
 
 ---

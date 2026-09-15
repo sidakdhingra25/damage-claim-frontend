@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ImagePlus, X, Loader2, CheckCircle2, AlertTriangle, AlertCircle, ChevronRight } from 'lucide-react';
+import { ImagePlus, X, Loader2, CheckCircle2, AlertTriangle, AlertCircle, ChevronRight, Info } from 'lucide-react';
 
 const StatusPill = ({ variant = 'needs_review' }) => {
   const config = {
@@ -148,6 +148,13 @@ export default function DamageClaimVerifier() {
           <span>Images are not stored</span>
           <span className="w-1 h-1 bg-[#444] rounded-full"></span>
           <span>Free to try</span>
+        </div>
+
+        <div className="mt-4 p-3 bg-zinc-500/10 border border-zinc-500/20 rounded-[8px] flex items-start gap-2.5 max-w-2xl">
+          <Info className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5" strokeWidth={2} />
+          <p className="text-[12.5px] text-zinc-300 leading-snug">
+            <strong>Heads up:</strong> The backend is hosted on a free Render tier that sleeps when inactive. Your very first claim may take 40–50 seconds to wake the server up, but all requests after that will be instant!
+          </p>
         </div>
       </div>
 

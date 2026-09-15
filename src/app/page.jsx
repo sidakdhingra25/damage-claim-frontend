@@ -1,7 +1,7 @@
 "use client";
 import { motion } from 'framer-motion';
 import DamageClaimVerifier from '@/components/DamageClaimVerifier';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, Code } from 'lucide-react';
 
 export default function Home() {
   return (
@@ -48,13 +48,22 @@ export default function Home() {
             from your photos — instantly, accurately, and securely.
           </p>
 
-          <div className="flex flex-col items-center gap-4 mt-2">
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-2">
             <button 
               onClick={() => document.getElementById('agent-container')?.scrollIntoView({ behavior: 'smooth' })}
               className="group flex items-center justify-center gap-2 px-10 py-4 bg-white text-black font-semibold text-[15px] rounded-full hover:bg-[#f5f5f5] transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)] hover:shadow-[0_0_60px_rgba(255,255,255,0.25)] ring-1 ring-white/20"
             >
               Try the AI Agent
             </button>
+            <a 
+              href="https://github.com/sidakdhingra25/damage-claim-frontend" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group flex items-center justify-center gap-2 px-8 py-4 bg-white/5 backdrop-blur-sm text-white font-semibold text-[15px] rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-white/10"
+            >
+              <Code className="w-5 h-5 opacity-90" />
+              View Code
+            </a>
           </div>
 
           <div className="mt-8 text-[12.5px] text-[#555]">
